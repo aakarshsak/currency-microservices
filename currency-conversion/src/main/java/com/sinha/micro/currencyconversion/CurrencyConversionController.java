@@ -31,7 +31,11 @@ public class CurrencyConversionController {
         CurrencyConversion conv = currencyExchangeProxy.getCurrency(from, to).getBody();
         conv.setQuantity(BigDecimal.valueOf(quantity));
         conv.setTotalCalculatedAmount(BigDecimal.valueOf(quantity).multiply(conv.getConversionMultiple()));
-        conv.setEnvironment(conv.getEnvironment() + ":" + environment.getProperty("local.server.port"));
+        String port = environment.getProperty("local.server.port");
+        String host = environment.getProperty("HOSTNAME");
+        String version = "v1";
+
+        conv.setEnvironment(conv.getEnvironment() + ":" + port + " " + host + " " + version);
 
         return  new ResponseEntity<>(conv, HttpStatus.OK);
     }

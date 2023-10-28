@@ -27,7 +27,12 @@ public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
     @Override
     public CurrencyExchange getCurrencyExchangeFromAndTo(Currency from, Currency to) {
         CurrencyExchange currencyExchange = currencyRepository.findByFromAndTo(from, to);
-        currencyExchange.setEnvironment(environment.getProperty("local.server.port"));
+
+        String port = environment.getProperty("local.server.port");
+        String host = environment.getProperty("HOSTNAME");
+        String version = "v1";
+
+        currencyExchange.setEnvironment(port + " " + host + " " + version);
 
         return currencyExchange;
     }
